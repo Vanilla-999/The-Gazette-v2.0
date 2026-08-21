@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Gazette</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <h1>📰 THE GAZETTE</h1>
+        <p class="date">20.8.2026</p>
+    </header>
+
+    <main class="content-wrapper">
+        
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <div id="home-view" class="page-view active">
+            
+            <section class="left-column">
+                <article class="card">
+                    <div class="card-text">
+                        <h2>Шокирующая новость</h2>
+                        <p>Криштиану Роналду не выиграет свой последний чемпионат мира.</p>
+                        <p>Сборная Португалии уступила Испании со счётом 0:1 в 1/8 финала. Единственный мяч на 90+1 минуте забил Микель Мерино.</p>
+                    </div>
+                </article>
+
+                <article class="card">
+                    <img src="https://i.pinimg.com/736x/13/fb/0a/13fb0a461019f1f57102027226e85cde.jpg" 
+                         alt="Брауни" class="news-img">
+                    <div class="card-text">
+                        <h2>Шоколадные брауни</h2>
+                        <p><em>Брауни — десерт с хрустящей корочкой и влажной серединкой. Для лучшего вкуса используйте темный шоколад (от 70% какао).</em></p>
+                        
+                        <h3>Ингредиенты:</h3>
+                        <ul>
+                            <li>Темный шоколад — 180 г</li>
+                            <li>Сливочное масло — 180 г</li>
+                            <li>Сахар — 220 г</li>
+                            <li>Яйца — 3 шт.</li>
+                            <li>Мука — 75 г</li>
+                            <li>Соль — 1/4 ч. л.</li>
+                        </ul>
+
+                        <h3>Приготовление:</h3>
+                        <p>Растопите шоколад с маслом до однородности и дайте остыть. Взбейте яйца с сахаром и солью до растворения кристаллов. Соедините шоколадную смесь с яичной, перемешайте, добавьте просеянную муку и аккуратно вымешайте лопаткой.</p>
+                        <p>Выложите тесто в форму с пергаментом и выпекайте при 175°C около 25 минут. Важно не пересушить десерт. Полностью остудите перед нарезкой.</p>
+                    </div>
+                </article>
+            </section>
+
+            <aside class="right-column">
+                <div class="card jokes-card">
+                    <h2>Анекдот</h2>
+                    <div class="joke">
+                        <p>Кот - это ходячая реклама того, как прекрасно ты мог бы жить, если бы не долбаная работа.</p>
+                    </div>
+                </div>
+
+                <div class="card sudoku-card">
+                    <h2>Sudoku</h2>
+                    <div id="sudoku-board"></div>
+                </div>
+            </aside>
+
+        </div>
+
+       <!-- СТРАНИЦА ПРОФИЛЬ -->
+<div id="profile-view" class="page-view">
+    <div class="card profile-card">
+        <h2>👤 Профиль пользователя</h2>
+        
+        <!-- 1. Состояние: ГОСТЬ (показываем, если не вошел) -->
+        <div id="guest-profile" class="profile-state">
+            <p style="margin-bottom: 15px; color: #666;">Вы играете как Гость. Зарегистрируйтесь, чтобы сохранять свои очки на сервере!</p>
+            <button id="openAuthBtn" class="auth-btn">Войти / Регистрация</button>
+        </div>
+
+        <!-- 2. Состояние: АВТОРИЗОВАН (показываем, если вошел) -->
+        <div id="user-profile" class="profile-state" style="display: none;">
+            <p class="welcome-text" style="font-size: 1.2rem; margin-bottom: 15px;">
+                Привет, <strong id="user-nickname" style="color: #cc0000;">Игрок</strong>! 👋
+            </p>
+            <button id="logoutBtn" class="auth-btn" style="background-color: #555;">Выйти из аккаунта</button>
+        </div>
+        
+        <div class="score-card">
+            <span class="score-label">Уровень мастерства:</span>
+            <div class="score-value">
+                <span id="sudoku-score">0</span>
+                <small>pts</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+    </main>
+
+    <nav class="side-nav">
+        <a href="#home" class="nav-item active" title="Home">
+            <span class="nav-icon">☗</span>
+            <span class="nav-label">Home</span>
+        </a>
+        <a href="#profile" class="nav-item" title="Profile">
+            <span class="nav-icon">⬤</span>
+            <span class="nav-label">Profile</span>
+        </a>
+    </nav>
+
+    <footer class="main-footer">
+        <div class="footer-text">© The Gazette, 2026</div>
+    </footer>
+
+    <!-- МОДАЛЬНОЕ ОКНО -->
+    <div id="authModal" class="modal-overlay">
+        <div class="modal-card">
+            <button class="modal-close" id="closeAuthBtn">&times;</button>
+
+            <div class="auth-tabs">
+                <button class="tab-btn active" id="tabLoginBtn">Вход</button>
+                <button class="tab-btn" id="tabRegisterBtn">Регистрация</button>
+            </div>
+
+            <!-- ФОРМА ВХОДА -->
+            <form id="loginForm" class="auth-form active">
+                <h2>С возвращением!</h2>
+                <div class="input-group">
+                    <input type="text" id="loginUsername" placeholder="Никнейм" required />
+                </div>
+                <div class="input-group">
+                    <input type="password" id="loginPassword" placeholder="Пароль" required />
+                </div>
+                <button type="submit" class="submit-btn">Войти в систему</button>
+            </form>
+
+            <!-- ФОРМА РЕГИСТРАЦИИ -->
+            <form id="registerForm" class="auth-form">
+                <h2>Создать аккаунт</h2>
+                <div class="input-group">
+                    <input type="text" id="regUsername" placeholder="Придумай никнейм" required />
+                </div>
+                <div class="input-group">
+                    <input type="password" id="regPassword" placeholder="Придумай пароль" required />
+                </div>
+                <button type="submit" class="submit-btn">Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Скрипт подключается В САМОМ КОНЦЕ перед закрывающим tag body -->
+    <script src="script.js"></script>
+</body>
+</html>

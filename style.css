@@ -1,0 +1,618 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FFFAFA ;
+    font-family: 'Georgia', 'Times New Roman', serif; /* шрифт с засечками */
+    color: #2c2c2c;
+    padding: 20px;
+}
+
+/* ==========================================
+   2. ШАПКА
+   ========================================== */
+.main-header {
+    background: #1a1a1a;
+    color: #f0e6d3;
+    text-align: center;
+    padding: 25px 20px 15px;
+    border-bottom: 4px solid #000000; 
+    max-width: 1000px;
+    margin: 0 auto 30px;
+    border-radius: 4px;
+}
+
+.main-header h1 {
+    font-size: 3rem;
+    letter-spacing: 4px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.main-header .date {
+    font-style: italic;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* ==========================================
+   3. КОНТЕЙНЕР ДЛЯ КОЛОНОК (Flexbox)
+   ========================================== */
+.content-wrapper {
+    display: flex;
+    gap: 25px;
+    max-width: 1000px;
+    margin: 0 auto;
+    align-items: flex-start; /* чтобы колонки начинались сверху */
+}
+
+.left-column {
+    flex: 2;  /* новости шире */
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* расстояние между карточками */
+}
+
+.right-column {
+    flex: 1;  /* анекдоты + судоку уже */
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+/* ==========================================
+   4. КАРТОЧКИ (общий стиль)
+   ========================================== */
+.card {
+    background: #fffef9;  /* цвет старой бумаги */
+    border-radius: 6px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    overflow: hidden; /* чтобы картинка не вылезала за скругления */
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.card ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 15px;
+}
+
+.card li {
+    padding: 2px 0;
+    line-height: 1.4;
+}
+
+/* ==========================================
+   5. КАРТИНКИ В КАРТОЧКАХ
+   ========================================== */
+.news-img {
+    width: 100%;
+    height: 200px;           /* ОДИНАКОВАЯ высота для всех картинок */
+    object-fit: cover;       /* обрезает, чтобы вписаться */
+    filter: grayscale(30%);  /* лёгкая серость */
+    display: block;
+}
+
+.card-text {
+    padding: 20px;
+}
+
+.card-text h2 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #1a1a1a;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+}
+
+.card-text p {
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+/* ==========================================
+   6. КАРТОЧКА АНЕКДОТОВ
+   ========================================== */
+.jokes-card {
+    padding: 20px;
+}
+
+.jokes-card h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.joke {
+    background: #faf7f2;
+    padding: 12px 15px;
+    border-left: 3px solid #000000;
+    margin-bottom: 10px;
+    border-radius: 0 4px 4px 0;
+    font-style: italic;
+    line-height: 1.5;
+}
+
+.joke:last-child {
+    margin-bottom: 0;
+}
+
+/* ==========================================
+   7. КАРТОЧКА СУДОКУ
+   ========================================== */
+.sudoku-card {
+    padding: 20px;
+    text-align: center;
+}
+
+.sudoku-card h2 {
+    margin-bottom: 15px;
+    font-size: 1.3rem;
+}
+
+#sudoku-board {
+    display: grid;
+    grid-template-columns: repeat(9, 38px);
+    grid-template-rows: repeat(9, 38px);
+    gap: 1px;
+    background: #333;
+    border: 3px solid #000;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+#sudoku-board input {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    background: white;
+    padding: 0;
+}
+
+#sudoku-board input:disabled {
+    background-color: #e9e9e9;
+    color: #333;
+}
+
+/* Жирные линии для блоков 3×3 */
+#sudoku-board input:nth-child(3n) {
+    border-right: 2px solid #000;
+}
+#sudoku-board input:nth-child(9n) {
+    border-right: none;
+}
+#sudoku-board input:nth-child(n+19):nth-child(-n+27),
+#sudoku-board input:nth-child(n+46):nth-child(-n+54) {
+    border-bottom: 2px solid #000;
+}
+    
+.score-card {
+    background: #1a1a1a;
+    color: #f0e6d3;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    margin-top: 20px;
+    border: 2px solid #333;
+}
+
+.score-value {
+    font-size: 2rem;
+    font-weight: bold;
+    font-family: 'Courier New', monospace; /* Моноширинный шрифт для цифр */
+    margin-top: 5px;
+}
+
+.score-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+/* ==========================================
+   8. БОКОВАЯ ПАНЕЛЬ (ПК ВЕРСИЯ)
+   ========================================== */
+.side-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;                /* на всю высоту экрана */
+    width: 70px;                  /* узкая полоска */
+    background-color: #1a1a1a;
+    display: flex;
+    flex-direction: column;       /* элементы сверху вниз */
+    align-items: center;
+    padding-top: 30px;
+    z-index: 1000;
+    border-right: 1px solid #333;
+}
+
+/* Каждая ссылка — блок */
+.nav-item {
+    display: flex;
+    flex-direction: column;       /* иконка над текстом */
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 15px 5px;
+    color: #888;
+    text-decoration: none;
+    transition: all 0.3s;
+    position: relative;
+}
+
+/* Иконка (смайлик) */
+.nav-icon {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+/* Подпись под иконкой */
+.nav-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Georgia', serif;
+}
+
+/* При наведении — красный */
+.nav-item:hover,
+.nav-item.active {
+    color: #474747;
+    background-color: rgba(204, 0, 0, 0.05);
+}
+
+/* Полосочка слева у активного пункта */
+.nav-item.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 60%;
+    background-color: #cc0000;
+}
+
+/* Копирайт внизу панели */
+.nav-copyright {
+    margin-top: auto;             /* прижимает вниз */
+    padding-bottom: 20px;
+    color: #555;
+    font-size: 8px;
+    writing-mode: vertical-rl;    /* вертикальный текст */
+    text-orientation: mixed;
+    letter-spacing: 1px;
+}
+
+/* Сдвигаем весь контент сайта вправо, чтобы не залезал под панель */
+body {
+    margin-left: 70px;            /* ширина панели */
+}
+
+.main-footer {
+    text-align: center;
+    padding: 15px 20px;
+    color: #888;
+    font-size: 0.82rem;
+    border-top: 1px solid #bbb6ab;
+    max-width: 1000px;
+    margin: 30px auto 0;
+}
+
+/* По умолчанию скрываем страницы */
+.page-view {
+    display: none;
+    width: 100%;
+}
+
+/* Показываем только активную страницу */
+.page-view.active {
+    display: flex; /* Используем flex, чтобы внутри Главной работали твои колонки */
+    gap: 25px;
+}
+
+/* Стили для карточки профиля, чтобы выглядела красиво */
+.profile-card {
+    padding: 30px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Базовый стиль кнопок */
+.auth-btn {
+    display: block;
+    width: 100%;
+    max-width: 280px; /* Сделали чуть шире для комфорта */
+    margin: 15px auto;
+    padding: 16px 24px; /* Увеличили область нажатия */
+    
+    background-color: #1a1a1a; /* Цвет фона */
+    color: #f0e6d3;           /* Цвет текста */
+    
+    border: none;             /* Убрали стандартную рамку */
+    border-radius: 30px;      /* Скругленные края (pill-shape) */
+    
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    
+    cursor: pointer;
+    transition: all 0.3s ease; /* Плавность для ховера */
+    
+    /* Убираем синее выделение (highlight) при тапе на мобиле */
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+/* Ховер для ПК */
+.auth-btn:hover {
+    background-color: #333;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+/* Эффект при нажатии (активное состояние) */
+.auth-btn:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+
+.score-text {
+    margin-top: 20px;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+/* Затемнение заднего фона */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(3px);
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+/* Карточка окна в стиле газеты */
+.modal-card {
+    background: #fffef9;
+    color: #1a1a1a;
+    padding: 30px;
+    border-radius: 8px;
+    border: 2px solid #1a1a1a;
+    width: 90%;
+    max-width: 380px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    box-sizing: border-box;
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    color: #000;
+}
+
+/* Переключатели закладок */
+.auth-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 8px 0;
+    background: none;
+    border: none;
+    color: #777;
+    font-family: 'Georgia', serif;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+}
+
+.tab-btn.active {
+    color: #1a1a1a;
+    border-bottom-color: #1a1a1a;
+}
+
+.auth-form {
+    display: none;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-form.active {
+    display: flex;
+}
+
+.auth-form h2 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background: #fff;
+    color: #2c2c2c;
+    font-size: 14px;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.input-group input:focus {
+    border-color: #1a1a1a;
+    outline: none;
+}
+
+.submit-btn {
+    padding: 12px;
+    border-radius: 4px;
+    border: none;
+    background: #1a1a1a;
+    color: #f0e6d3;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+}
+
+.submit-btn:hover {
+    background: #333;
+}
+
+/* ==========================================
+   9. АДАПТИВ ДЛЯ ТЕЛЕФОНА
+   ========================================== */
+@media (max-width: 700px) {
+    /* Возвращаем body отступ слева */
+    body {
+        margin-left: 0;
+        padding-bottom: 65px;
+    }
+
+    /* Панель уезжает вниз */
+    .side-nav {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        flex-direction: row;          /* элементы в строку */
+        justify-content: space-around;
+        padding: 10px 0 15px;
+        border-right: none;
+        border-top: 1px solid #333;
+        background-color: rgba(10, 10, 10, 0.92);
+        backdrop-filter: blur(8px);
+    }
+
+    .nav-item {
+        flex-direction: column;
+        padding: 5px;
+        width: auto;
+    }
+
+    .nav-icon {
+        font-size: 20px;
+        margin-bottom: 2px;
+    }
+
+    .nav-label {
+        font-size: 8px;
+    }
+
+    /* Убираем активную полосочку слева (она не нужна снизу) */
+    .nav-item.active::before {
+        display: none;
+    }
+
+    /* Активный пункт — полосочка СВЕРХУ */
+    .nav-item.active::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 30%;
+        height: 2px;
+        background-color: #cc0000;
+    }
+
+    /* Прячем копирайт */
+    .nav-copyright {
+        display: none;
+    }
+
+    /* ========================================== */
+    /* ВОТ ТУТ МЫ ИСПРАВИЛИ!                      */
+    /* ========================================== */
+    .content-wrapper {
+        flex-direction: column;
+    }
+
+    /* ЗАСТАВЛЯЕМ КОЛОНКИ НА ГЛАВНОЙ ВСТАТЬ ДРУГ ПОД ДРУГА */
+    .page-view.active {
+        flex-direction: column;
+    }
+
+    .left-column, .right-column {
+        width: 100%; /* Чтобы колонки занимали всю ширину экрана смартфона */
+    }
+    /* ========================================== */
+
+    .main-header h1 {
+        font-size: 2rem;
+    }
+
+    .right-column {
+        align-items: center;
+    }
+
+    .right-column .card {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    #sudoku-board {
+        grid-template-columns: repeat(9, 1fr);
+        grid-template-rows: repeat(9, 1fr); 
+        width: 100%;
+        max-width: 342px;
+        aspect-ratio: 1 / 1; 
+    }
+
+    #sudoku-board input {
+        font-size: 14px;
+    }
+}
